@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Document</title>
+
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <h2 style="text-align: center;">List of Users :</h2>
+    
+    <button id="myBtn">Add More Users</button>
+    
+    <table border="1" width="100%"  align="center" cellpadding="10px" cellspacing="0px">
+        <thead>
+            <tr>
+            <th class="head">Username</th>
+            <th class="head">Email</th>
+            <th class="head">Phone</th>
+            <th class="head">Update</th>
+            <th class="head">Delete</th>
+            </tr>
+        </thead>
+        <tbody id="userDiv">
+        </tbody>
+    </table>
+
+    <!-- modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <div class="container">
+            <label for="uname"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="uname" id="uname" required> <br><br>
+          <label for="passwd"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="passwd" id="passwd" required> <br><br>
+          <label for="email"><b>Email</label>
+            <input type="text" placeholder="Enter Email" name="email" id="email" required> <br><br>
+          <label for="mobile"><b>Mobile</b></label>
+            <input type="text" placeholder="Enter Mobile" name="mobile" id="mobile" required> <br><br>
+          
+          <button id="add">Add User</button>
+          </div>
+        </div>
+    </div>
+    
+
+    <script>
+        var users = JSON.parse(localStorage.getItem("users"));
+        var text = "";
+        for (i = 0; i < users.length; i++) { 
+            text += "<tr>";
+            text += "<td>" + users[i].username + "</td>";
+            text += "<td>" + users[i].email + "</td>";
+            text += "<td>" + users[i].mobile+ "</td>";
+            text += `<td><button onclick = 'updateUser(${i})' >Update</button></td>`;
+            text += `<td><button onclick = 'deleteUser(${i})'>Delete</button></td></tr>`;
+        }
+        document.getElementById("userDiv").innerHTML += text;
+
+        document.getElementById("add").addEventListener("click", addUser);
+        function addUser()
+        {
+            let obj={
+                username: document.getElementById("uname").value,
+                password: document.getElementById("passwd").value,
+                email: document.getElementById("email").value,
+                mobile: document.getElementById("mobile").value
+            };
+            let users= JSON.parse(localStorage.getItem("users"));
+            users.push(obj);
+            localStorage.setItem("users",JSON.stringify(users));
+        }
+
+        //deleteUser
+        function deleteUser(i)
+        {
+            let users= JSON.parse(localStorage.getItem("users"));
+            users.splice(i, 1);
+            localStorage.setItem("users",JSON.stringify(users));
+            location.reload();
+        }
+        
+        //updateUser
+        function updateUser(i)
+        {
+            let users= JSON.parse(localStorage.getItem("users"));
+            users.splice(i, 1);
+            localStorage.setItem("users",JSON.stringify(users));
+            location.reload();
+        }
+
+        //modal code
+        var modal = document.getElementById("myModal");
+        var btn = document.getElementById("myBtn");
+        var span = document.getElementsByClassName("close")[0];
+        var addbtn = document.getElementById("add");
+
+        btn.onclick = function() {
+        modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+        modal.style.display = "none";
+        }
+        
+        addbtn.onclick = function() {
+        modal.style.display = "none";
+        location.reload();
+        }
+        
+    </script>
+</body>
+</html>
