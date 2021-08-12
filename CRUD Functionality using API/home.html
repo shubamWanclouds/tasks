@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <title>Document</title>
+
+  <link rel="stylesheet" href="home.css">
+</head>
+
+<body>
+  <h2 style="text-align: center;">List of Users :</h2>
+
+  <button id="myBtn">Add a Post</button>
+
+  <table border="1" width="100%"  align="center" cellpadding="10px" cellspacing="0px">
+    <thead>
+      <tr>
+        <th class="head">UserId</th>
+        <th class="head">Id</th>
+        <th class="head">title</th>
+        <th class="head">Action</th>
+      </tr>
+    </thead>
+    <tbody id="userDiv">
+    </tbody>
+  </table>
+
+  <!--Add a Post Modal -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="container">
+        <label for="userId"><b>userId</b></label>
+        <input type="text" placeholder="Enter your userId" name="userId" id="userId" required> <br><br>
+        <label for="title"><b>Title</b></label>
+        <input type="text" placeholder="Choose a Title" name="title" id="title" required> <br><br>
+        <label for="body"><b>Body</label>
+        <input type="text" placeholder="Place its Body" name="body" id="body" required> <br><br>
+        
+        <button id="add">Add Post</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- View Details Modal -->
+  <div id="viewModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="container" id="detailsContainer">
+      </div>
+    </div>
+  </div>
+
+  <script src="home.js">
+  </script>
+
+</body>
+</html>
