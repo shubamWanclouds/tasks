@@ -28,12 +28,25 @@ modal.style.display = "none";
 }
 
 addbtn.onclick = function() {
-modal.style.display = "none";
-location.reload();
+// modal.style.display = "none";
+// location.reload();
+}
+
+function check(){
+    let uname = document.forms["myForm"]["uname"].value;
+    let passwd = document.forms["myForm"]["passwd"].value;
+    let email = document.forms["myForm"]["email"].value;
+    let mobile = document.forms["myForm"]["mobile"].value;
+    console.log(uname,passwd,email,mobile)
+    if(uname == "" || passwd == "" || email == "" || mobile == "") {
+        return false;
+    } else {
+        addUser();
+        return true;
+    }
 }
 
 //  Add User Function
-document.getElementById("add").addEventListener("click", addUser);
 function addUser() {
     let obj = {
         username: document.getElementById("uname").value,

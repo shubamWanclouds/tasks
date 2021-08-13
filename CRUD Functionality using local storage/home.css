@@ -95,7 +95,7 @@ button {
     cursor: pointer;
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password],input[type=email] {
     width: 100%;
     padding: 12px 20px;
     margin: 15px 0;
@@ -110,4 +110,10 @@ input:focus
     border: 1.5px solid #1670BE;
     box-shadow: 0 0 3px #1670BE;
     outline: none;
+}
+
+span{
+    font-size: 12px;
+    color:#226fb3;
+    font-style: italic;
 }

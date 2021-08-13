@@ -32,18 +32,23 @@
   <!--add modal -->
   <div id="myModal" class="modal">
     <div class="modal-content">
+      <form name="myForm" action="" onsubmit="return check()">
       <span class="close">&times;</span>
       <div class="container">
         <label for="uname"><b>Username</b></label>
         <input type="text" placeholder="Enter Username" name="uname" id="uname" required> <br><br>
-        <label for="passwd"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="passwd" id="passwd" required> <br><br>
-        <label for="email"><b>Email</label>
-        <input type="text" placeholder="Enter Email" name="email" id="email" required> <br><br>
-        <label for="mobile"><b>Mobile</b></label>
-        <input type="text" placeholder="Enter Mobile" name="mobile" id="mobile" required> <br><br>
+        <label for="passwd"><b>Password<span> ( Password Should be of atleast 8 Characters with 1 Letter and 1 Number )</span></label>
+        <input type="password" placeholder="Enter Password" name="passwd" id="passwd" required
+        pattern = "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"> <br><br>
+        <label for="email"><b>Email <span>( Email should be of the Format: abc@def.com )</span></label>
+        <input type="email" placeholder="Enter Email" name="email" id="email" required
+        pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"> <br><br>
+        <label for="mobile"><b>Mobile <span>( Mobile Number Must be of 10 Digits and should start form 7/8/9 )</span></b></label>
+        <input type="text" placeholder="Enter Mobile" name="mobile" id="mobile" required
+        pattern = "^[789]\d{9}$"> <br><br>
         
         <button id="add">Add User</button>
+      </form>
       </div>
     </div>
   </div>
