@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login</title>
+
+  <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+  <div class="form">
+    <div class="imgcontainer">
+      <img src="user.PNG" alt="icon" class="icon">
+      <h2>Sign In</h2>
+    </div>
+    <div class="container">
+     <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" id="uname" required>
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" id="passwd" required>
+      <button id="submit">Login</button>
+      <label><input type="checkbox" checked="checked" name="remember"> Remember me</label>
+    </div>
+  </div>
+
+  <script>
+        
+  document.getElementById("submit").addEventListener("click",check);
+  function check() {
+    let uname = document.getElementById("uname").value;
+    let passwd = document.getElementById("passwd").value;
+    var users = JSON.parse(localStorage.getItem("users"));
+    for(let i=0;i<users.length;i++) {
+      if(users[i].username == uname && users[i].password == passwd) {
+        window.open("home.html");
+      }
+    }
+  }        
+  </script>
+
+</body>
+</html>
