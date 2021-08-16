@@ -1,17 +1,39 @@
-let text = "";
-let newtext = "";
+let allPostsData = "";
+let newPostData = ""; 
+let postAdditionModal = document.getElementById("postAdditionModal");
+let openPostAdditionModal = document.getElementById("myBtn");
+let closePostAdditionModal = document.getElementsByClassName("close")[0];
+let addAPostBtn = document.getElementById("add");
 
-//  "Add Modal" Open and Close functionality
-let modal = document.getElementById("myModal");
-let btn = document.getElementById("myBtn");
-let span = document.getElementsByClassName("close")[0];
-let addbtn = document.getElementById("add");
+openPostAdditionModal.onclick = () => postAdditionModal.style.display = "block";
+closePostAdditionModal.onclick = () => postAdditionModal.style.display = "none";
 
-btn.onclick = () => modal.style.display = "block";
-span.onclick = () => modal.style.display = "none";
+const fetchAllPostsAPI = callback => {
+  fetch("https://jsonplaceholder.typicode.com/posts/")
+  .then(res => res.json())
+  .then(data => {
+    callback(null, data);
+  })
+}
+const showAllPosts = () => {
+  fetchAllPostsAPI((err, data) => {
+    for (let index = 0; index < data.length; index++) { 
+      allPostsData += `<tr id="${data[index].id}">`
+      allPostsData += `<td > ${data[index].userId} </td>`
+      allPostsData += `<td>  ${data[index].id} </td>`
+      allPostsData += `<td> ${data[index].title} </td>`
+      allPostsData += `<td><button onclick = viewPostDetails(${data[index].id})><i class = "fa fa-info-circle" aria-hidden = "true" 
+      style = "font-size:24px;color:white;"></i></button> &nbsp;&nbsp;&nbsp;&nbsp; <button onclick = editPost(${data[index].id})> 
+      <i class = "fa fa-pencil" aria-hidden = "true" style = "font-size:24px;color:white;"></i></button> &nbsp;&nbsp;&nbsp;&nbsp;
+      <button onclick = deletePost(${data[index].id})><i class = "fa fa-trash" aria-hidden = "true" style = "font-size:24px;color:white;"> 
+      </i></button> &nbsp;&nbsp;&nbsp;&nbsp; </td></tr>`;
+    }
+    document.getElementById("tableBody").innerHTML += allPostsData;
+  })
+}
+showAllPosts();
 
-//Add a Post 
-const addPost = callback => {
+const addPostAPI = callback => {
   fetch("https://jsonplaceholder.typicode.com/posts/", {
     method: 'POST',
     headers: {
@@ -23,97 +45,62 @@ const addPost = callback => {
     body: document.getElementById("body").value
     })
   })
-    .then(res => res.json())
-    .then(data => {
+  .then(result => result.json())
+  .then(data => {
     callback(data);
-    }) 
+  }) 
 }
-
-addbtn.onclick = () => {
-  addPost((data) => {
-    console.log(`Post with Following Data Added Successfully, ${data}`);
-    newtext += `<tr id="${data.id}">`;
-    newtext += "<td >" + data.userId + "</td>";
-    newtext += "<td>" + data.id + "</td>";
-    newtext += "<td>" + data.title + "</td>";
-    newtext += 
-    `<td><button onclick = viewPostDetails() > <i class="fa fa-info-circle" aria-hidden="true" style="font-size:24px;color:white;"> </i>
-    </button>  &nbsp;&nbsp;&nbsp;&nbsp; <button onclick = editPost() > <i class="fa fa-pencil" aria-hidden="true" style="font-size:24px;color:white;"> </i>
-    </button>  &nbsp;&nbsp;&nbsp;&nbsp; <button onclick = deletePost() > <i class="fa fa-trash" aria-hidden="true" style="font-size:24px;color:white;"> </i>
-    </button>  &nbsp;&nbsp;&nbsp;&nbsp;  </td> </tr>`;
-    
-    document.getElementById("userDiv").innerHTML += newtext;
-    modal.style.display = "none";
+addAPostBtn.onclick = () => {
+  addPostAPI((data) => {
+    console.log(`Post with Following Data Added Successfully, ${JSON.stringify(data)}`);
+    newPostData += `<tr id = "${data.id}">`;
+    newPostData += `<td>${data.userId}</td>`;
+    newPostData += `<td>${data.id}</td>`;
+    newPostData += `<td>${data.title}</td>`;
+    newPostData += `<td><button onclick = viewPostDetails()><i class = "fa fa-info-circle" aria-hidden = "true" 
+    style = "font-size:24px;color:white;"></i></button> &nbsp;&nbsp;&nbsp;&nbsp; <button onclick = editPost()> 
+    <i class = "fa fa-pencil" aria-hidden = "true" style = "font-size:24px;color:white;"></i></button>  
+    &nbsp;&nbsp;&nbsp;&nbsp; <button onclick = deletePost()><i class = "fa fa-trash" aria-hidden = "true" 
+    style = "font-size:24px;color:white;"></i></button> &nbsp;&nbsp;&nbsp;&nbsp; </td> </tr>`;
+    document.getElementById("tableBody").innerHTML += newPostData;
+    postAdditionModal.style.display = "none";
   })
 }
 
-// Get Post Details
-const getPostDetails = (id, callback) => {
-  fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
-    .then(res => res.json())
-    .then(data => {
-      callback(null, data);
-    })
+const getPostDetails = (postId, callback) => {
+  fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+  .then(result => result.json())
+  .then(data => {
+    callback(null, data);
+  })
 }
-
-const viewPostDetails = id => {
-  getPostDetails(id , (err, data) => {
+const viewPostDetails = postId => {
+  getPostDetails(postId , (err, data) => {
     document.getElementById("detailsContainer").innerHTML = `<br> <p>userId : ${data.userId} </p> <br> 
     <p> Id : ${data.id }</p> <br> <p>Title : ${data.title} </p> <br> <p>Body : ${data.body}</p> <br>`
     
-    //  "View Modal" Open and Close functionality
-    let modal = document.getElementById("viewModal");
-    let span = document.getElementsByClassName("close")[1];
+    let postDetailsModal = document.getElementById("viewPostDetailsModal");
+    let closePostDetailsModal = document.getElementsByClassName("close")[1];
     
-    const showModal = () => {
-      modal.style.display = "block";
+    const showPostDetailsModal = () => {
+      postDetailsModal.style.display = "block";
     }
-    showModal();
-    span.onclick = function() {
-        modal.style.display = "none";
+    showPostDetailsModal();
+    closePostDetailsModal.onclick = function() {
+      postDetailsModal.style.display = "none";
     }
   })
 }
 
-// Fetch Data from API 
-const getTableData = callback => {
-  fetch("https://jsonplaceholder.typicode.com/posts/")
-  .then(res => res.json())
-  .then(data => {
-      callback(null, data);
-  })
-}
-
-const tableData = () => {
-  getTableData((err, data) => {
-    //  Filling Our Table
-    for (let i = 0; i < data.length; i++) { 
-      text += `<tr id="${data[i].id}">`
-      text += `<td > ${data[i].userId} </td>`
-      text += `<td>  ${data[i].id} </td>`
-      text += `<td> ${data[i].title} </td>`
-      text += 
-      `<td><button onclick = viewPostDetails(${data[i].id}) > <i class="fa fa-info-circle" aria-hidden="true" style="font-size:24px;color:white;"> </i>
-      </button>  &nbsp;&nbsp;&nbsp;&nbsp; <button onclick = editPost(${data[i].id}) > <i class="fa fa-pencil" aria-hidden="true" style="font-size:24px;color:white;"> </i>
-      </button>  &nbsp;&nbsp;&nbsp;&nbsp; <button onclick = deletePost(${data[i].id}) > <i class="fa fa-trash" aria-hidden="true" style="font-size:24px;color:white;"> </i>
-      </button>  &nbsp;&nbsp;&nbsp;&nbsp;  </td> </tr>`;
-    }
-    globalData = data;
-    document.getElementById("userDiv").innerHTML += text;
-  })
-}
-tableData();
-
-//  Edit Post
 const editPostApi = (obj, callback) => {
   fetch(`https://jsonplaceholder.typicode.com/posts/${obj.id}`, {
     method: 'PUT',
-    headers:{
+    headers: {
       'content-type': 'application/json'
     },
-    body:JSON.stringify({
-      userId:obj.userId,
-      title:obj.title,
+    body: JSON.stringify({
+      userId: obj.userId,
+      title: obj.title,
       body: obj.body
     })
   })
@@ -121,46 +108,42 @@ const editPostApi = (obj, callback) => {
   .then(data => {
     callback(null, data);
   });
-}
-  
-const editPost = i => {
-  getPostDetails(i, (err, data) => {
-    //  Filling Input Fields
-    document.getElementById("userId2").value = data.userId,
-    document.getElementById("title2").value = data.title ,
-    document.getElementById("body2").value = data.body   
+}  
+const editPost = postId => {
+  getPostDetails(postId, (err, data) => {
+    document.getElementById("editPostModalUserId").value = data.userId,
+    document.getElementById("editPostModalTitle").value = data.title ,
+    document.getElementById("editPostModalBody").value = data.body   
     
-    //  "Update Modal" Open and Close functionality
-    let modal = document.getElementById("updateModal");
-    let span = document.getElementsByClassName("close")[2];
-    let updatebtn = document.getElementById("update");
+    let PostUpdationModal = document.getElementById("PostUpdationModal");
+    let closePostUpdationModal = document.getElementsByClassName("close")[2];
+    let updateBtn = document.getElementById("update");
   
-    const showModal = () => {
-      modal.style.display = "block";
+    const showPostUpdationModal = () => {
+      PostUpdationModal.style.display = "block";
     }
-    showModal();
+    showPostUpdationModal();
     
-    span.onclick = () => {
-      modal.style.display = "none";
+    closePostUpdationModal.onclick = () => {
+      PostUpdationModal.style.display = "none";
     }
-    updatebtn.onclick = () => {
+    updateBtn.onclick = () => {
       let obj2 = {
-        id:i,
-        userId: document.getElementById("userId2").value,
-        title: document.getElementById("title2").value,
-        body: document.getElementById("body2").value,
+        id: postId,
+        userId: document.getElementById("editPostModalUserId").value,
+        title: document.getElementById("editPostModalTitle").value,
+        body: document.getElementById("editPostModalBody").value,
       };
       editPostApi(obj2, (err, data) => {
-          console.log(`Post with id ${i} is now Modified as following: ${JSON.stringify(data)}`)
-           modal.style.display = "none";
+        console.log(`Post with id ${postId} is now Modified as following: ${JSON.stringify(data)}`)
+        PostUpdationModal.style.display = "none";
       })
     }
   })  
 }
 
-//Delete Post
-const deletePostApi = (i, callback) => {
-  fetch(`https://jsonplaceholder.typicode.com/posts/${i}`, {
+const deletePostApi = (postId, callback) => {
+  fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {
     method: 'DELETE',
   })
   .then(res => res.json())
@@ -168,28 +151,12 @@ const deletePostApi = (i, callback) => {
     callback(null, data);
   })
 }
-
-const deletePost = i => {
-  deletePostApi(i, (err, data) => {
-    alert(`Post with id ${i} deleted Successfully!`)
-    document.getElementById(i).remove();
+const deletePost = postId => {
+  deletePostApi(postId, (err, data) => {
+    alert(`Post with id ${postId} deleted Successfully!`)
+    document.getElementById(postId).remove();
   })
 }
-
-//PATCH Method
-fetch("https://jsonplaceholder.typicode.com/posts/2", {
-  method: 'PATCH',
-  headers: {
-    'content-type': 'application/json'
-  },
-  body: JSON.stringify({
-    title:"Modification",
-    body:"I have successfully modified using patch method"
-  })
-})
-  .then(res => res.json())
-  .then(data => console.log(data))
-
 
   
   
