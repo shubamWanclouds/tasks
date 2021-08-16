@@ -1,5 +1,5 @@
 //Add a Post API
-function addPost(callback) {
+const addPost = callback => {
     fetch("https://jsonplaceholder.typicode.com/posts/", {
       method: 'POST',
       headers: {
@@ -18,7 +18,7 @@ function addPost(callback) {
   }
 
 // Get Post Details API
-function getPostDetails(id, callback) {
+const getPostDetails = (id, callback) => {
     fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
       .then(res => res.json())
       .then(data => {
@@ -27,7 +27,7 @@ function getPostDetails(id, callback) {
   }
 
 // Fetch Table from API 
-function getTableData(callback) {
+const getTableData = (callback) => {
     fetch("https://jsonplaceholder.typicode.com/posts/")
     .then(res => res.json())
     .then(data => {
@@ -36,7 +36,7 @@ function getTableData(callback) {
 }
 
 //  Edit Post
-function editPostApi(obj, callback) {
+const editPostApi = (obj, callback) => {
     fetch(`https://jsonplaceholder.typicode.com/posts/${obj.id}`, {
       method: 'PUT',
       headers:{
@@ -55,7 +55,7 @@ function editPostApi(obj, callback) {
 }
 
 //Delete Post API
-function deletePostApi(i, callback) {
+const deletePostApi = (i, callback) => {
   fetch(`https://jsonplaceholder.typicode.com/posts/${i}`, {
       method: 'DELETE',
   })
