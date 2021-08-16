@@ -40,9 +40,9 @@ const addPostAPI = callback => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-    userId: document.getElementById("userId").value,
-    title: document.getElementById("title").value,
-    body: document.getElementById("body").value
+      userId: document.getElementById("userId").value,
+      title: document.getElementById("title").value,
+      body: document.getElementById("body").value
     })
   })
   .then(result => result.json())
