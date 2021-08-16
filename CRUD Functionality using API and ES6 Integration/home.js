@@ -1,7 +1,7 @@
 let allPostsData = "";
 let newPostData = ""; 
 let postAdditionModal = document.getElementById("postAdditionModal");
-let openPostAdditionModal = document.getElementById("myBtn");
+let openPostAdditionModal = document.getElementById("openAddAPostModal");
 let closePostAdditionModal = document.getElementsByClassName("close")[0];
 let addAPostBtn = document.getElementById("add");
 
