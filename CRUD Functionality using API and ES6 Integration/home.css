@@ -82,14 +82,14 @@ button {
     width: 80%;
 }
 
-.close{
+.closeModal{
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
 
-.close:hover,.close:focus{
+.closeModal:hover,.closeModal:focus{
     color: #000;
     text-decoration: none;
     cursor: pointer;
