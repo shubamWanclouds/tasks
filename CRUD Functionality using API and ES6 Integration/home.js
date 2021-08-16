@@ -2,8 +2,8 @@ let allPostsData = "";
 let newPostData = ""; 
 let postAdditionModal = document.getElementById("postAdditionModal");
 let openPostAdditionModal = document.getElementById("openAddAPostModal");
-let closePostAdditionModal = document.getElementsByClassName("close")[0];
-let addAPostBtn = document.getElementById("add");
+let closePostAdditionModal = document.getElementsByClassName("closeModal")[0];
+let addAPostBtn = document.getElementById("addPost");
 
 openPostAdditionModal.onclick = () => postAdditionModal.style.display = "block";
 closePostAdditionModal.onclick = () => postAdditionModal.style.display = "none";
@@ -80,7 +80,7 @@ const viewPostDetails = postId => {
     <p> Id : ${data.id }</p> <br> <p>Title : ${data.title} </p> <br> <p>Body : ${data.body}</p> <br>`;
     
     let postDetailsModal = document.getElementById("viewPostDetailsModal");
-    let closePostDetailsModal = document.getElementsByClassName("close")[1];
+    let closePostDetailsModal = document.getElementsByClassName("closeModal")[1];
     
     const showPostDetailsModal = () => {
       postDetailsModal.style.display = "block";
@@ -116,7 +116,7 @@ const editPost = postId => {
     document.getElementById("editPostModalBody").value = data.body ;  
     
     let PostUpdationModal = document.getElementById("PostUpdationModal");
-    let closePostUpdationModal = document.getElementsByClassName("close")[2];
+    let closePostUpdationModal = document.getElementsByClassName("closeModal")[2];
     let updateBtn = document.getElementById("update");
   
     const showPostUpdationModal = () => {
