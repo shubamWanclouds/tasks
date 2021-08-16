@@ -88,10 +88,10 @@ const tableData = () => {
   getTableData((err, data) => {
     //  Filling Our Table
     for (let i = 0; i < data.length; i++) { 
-        text += `<tr id="${data[i].id}">`;
-        text += "<td >" + data[i].userId + "</td>";
-        text += "<td>" + data[i].id + "</td>";
-        text += "<td>" + data[i].title + "</td>";
+        text += `<tr id="${data[i].id}">`
+        text += `<td > ${data[i].userId} </td>`
+        text += `<td>  ${data[i].id} </td>`
+        text += `<td> ${data[i].title} </td>`
         text += 
         `<td><button onclick = viewPostDetails(${data[i].id}) > <i class="fa fa-info-circle" aria-hidden="true" style="font-size:24px;color:white;"> </i>
         </button>  &nbsp;&nbsp;&nbsp;&nbsp; <button onclick = editPost(${data[i].id}) > <i class="fa fa-pencil" aria-hidden="true" style="font-size:24px;color:white;"> </i>
