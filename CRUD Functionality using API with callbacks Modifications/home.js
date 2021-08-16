@@ -10,24 +10,24 @@ closePostAdditionModal.onclick = () => postAdditionModal.style.display = "none";
 
 const fetchAllPostsAPI = callback => {
   fetch("https://jsonplaceholder.typicode.com/posts/")
-  .then(res => res.json())
+  .then(result => result.json())
   .then(data => {
     callback(null, data);
   })
 }
 const showAllPosts = () => {
   fetchAllPostsAPI((err, data) => {
-    for (let index = 0; index < data.length; index++) { 
-      allPostsData += `<tr id="${data[index].id}">`
-      allPostsData += `<td > ${data[index].userId} </td>`
-      allPostsData += `<td>  ${data[index].id} </td>`
-      allPostsData += `<td> ${data[index].title} </td>`
-      allPostsData += `<td><button onclick = viewPostDetails(${data[index].id})><i class = "fa fa-info-circle" aria-hidden = "true" 
-      style = "font-size:24px;color:white;"></i></button> &nbsp;&nbsp;&nbsp;&nbsp; <button onclick = editPost(${data[index].id})> 
+    data.forEach((post, index) => { 
+      allPostsData += `<tr id="${post.id}">`; 
+      allPostsData += `<td > ${post.userId} </td>`;
+      allPostsData += `<td>  ${post.id} </td>`;
+      allPostsData += `<td> ${post.title} </td>`;
+      allPostsData += `<td><button onclick = viewPostDetails(${post.id})><i class = "fa fa-info-circle" aria-hidden = "true" 
+      style = "font-size:24px;color:white;"></i></button> &nbsp;&nbsp;&nbsp;&nbsp; <button onclick = editPost(${post.id})> 
       <i class = "fa fa-pencil" aria-hidden = "true" style = "font-size:24px;color:white;"></i></button> &nbsp;&nbsp;&nbsp;&nbsp;
-      <button onclick = deletePost(${data[index].id})><i class = "fa fa-trash" aria-hidden = "true" style = "font-size:24px;color:white;"> 
+      <button onclick = deletePost(${post.id})><i class = "fa fa-trash" aria-hidden = "true" style = "font-size:24px;color:white;"> 
       </i></button> &nbsp;&nbsp;&nbsp;&nbsp; </td></tr>`;
-    }
+    })
     document.getElementById("tableBody").innerHTML += allPostsData;
   })
 }
@@ -37,7 +37,7 @@ const addPostAPI = callback => {
   fetch("https://jsonplaceholder.typicode.com/posts/", {
     method: 'POST',
     headers: {
-    'Content-Type': 'application/json'
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({
     userId: document.getElementById("userId").value,
@@ -77,7 +77,7 @@ const getPostDetails = (postId, callback) => {
 const viewPostDetails = postId => {
   getPostDetails(postId , (err, data) => {
     document.getElementById("detailsContainer").innerHTML = `<br> <p>userId : ${data.userId} </p> <br> 
-    <p> Id : ${data.id }</p> <br> <p>Title : ${data.title} </p> <br> <p>Body : ${data.body}</p> <br>`
+    <p> Id : ${data.id }</p> <br> <p>Title : ${data.title} </p> <br> <p>Body : ${data.body}</p> <br>`;
     
     let postDetailsModal = document.getElementById("viewPostDetailsModal");
     let closePostDetailsModal = document.getElementsByClassName("close")[1];
@@ -111,9 +111,9 @@ const editPostApi = (obj, callback) => {
 }  
 const editPost = postId => {
   getPostDetails(postId, (err, data) => {
-    document.getElementById("editPostModalUserId").value = data.userId,
-    document.getElementById("editPostModalTitle").value = data.title ,
-    document.getElementById("editPostModalBody").value = data.body   
+    document.getElementById("editPostModalUserId").value = data.userId;
+    document.getElementById("editPostModalTitle").value = data.title ;
+    document.getElementById("editPostModalBody").value = data.body ;  
     
     let PostUpdationModal = document.getElementById("PostUpdationModal");
     let closePostUpdationModal = document.getElementsByClassName("close")[2];
@@ -135,7 +135,7 @@ const editPost = postId => {
         body: document.getElementById("editPostModalBody").value,
       };
       editPostApi(obj2, (err, data) => {
-        console.log(`Post with id ${postId} is now Modified as following: ${JSON.stringify(data)}`)
+        console.log(`Post with id ${postId} is now Modified as following: ${JSON.stringify(data)}`);
         PostUpdationModal.style.display = "none";
       })
     }
@@ -153,7 +153,7 @@ const deletePostApi = (postId, callback) => {
 }
 const deletePost = postId => {
   deletePostApi(postId, (err, data) => {
-    alert(`Post with id ${postId} deleted Successfully!`)
+    alert(`Post with id ${postId} deleted Successfully!`);
     document.getElementById(postId).remove();
   })
 }
